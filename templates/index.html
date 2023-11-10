@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload CSV</title>
+</head>
+<body>
+    <h2>Upload CSV File</h2>
+    <form method="post" id="uploadForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" id="fileInput" name="csv_file" accept=".csv">
+
+        <button id="submit-btn" onclick="uploadAndNavigate()">Upload CSV</button>
+    </form>
+    <hr>
+    <h2>CSV Data</h2>
+    <table>
+        <thead>
+            <tr>
+                {% for header in csv_data.0 %}
+                    <th>{{ header }}</th>
+                {% endfor %}
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in csv_data %}
+                <tr>
+                    {% for cell in row %}
+                        <td style="font-size: 12px;">{{ cell }}</td>
+                    {% endfor %}
+                    {% for cell in row %}
+                        {% if cell == 'index2' %}
+                            <td>
+                                <form id="revForm" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="file" name="csv_file" accept=".csv"  >
+                                    
+                                    <button type="button" onclick="reverse()">Reverse</button>
+                                </form>
+                            </td>
+    
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+
+        function reverse() {
+            var formElement = document.getElementById('revForm');
+            
+            if (!formElement) {
+                console.error('Form not found');
+                return;
+            }   
+    
+            var formData = new FormData(formElement);
+            
+            fetch('/reverse_compliment/', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                } else if (data.result) {
+                    alert('Result: ' + data.result.join(', '));
+                } else {
+                    alert('Unexpected response from the server');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
