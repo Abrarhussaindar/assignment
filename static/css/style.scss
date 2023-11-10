@@ -1,0 +1,38 @@
+form{
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    width: min-content;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    input{
+        padding: 5px;
+        border-radius: 20px;
+        border: 1px solid black;
+    }
+    button{
+        outline: none;
+        padding: 10px 40px;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        background: green;
+        font-weight: 500;
+    }
+}
+
+table{
+    tr{
+        text-align: center;
+        td{
+            p{
+                text-transform: capitalize;
+                font-size: 16px;
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+

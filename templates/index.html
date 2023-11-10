@@ -2,9 +2,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {% load static %}
     <title>Upload CSV</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
+
 <body>
+ 
     <h2>Upload CSV File</h2>
     <form method="post" id="uploadForm" enctype="multipart/form-data">
         {% csrf_token %}
@@ -32,6 +36,10 @@
                     {% for cell in row %}
                         {% if cell == 'index2' %}
                             <td>
+                                <p>
+                                    you need to upload the file again
+
+                                </p>
                                 <form id="revForm" method="post" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <input type="file" name="csv_file" accept=".csv"  >
